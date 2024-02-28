@@ -14,7 +14,7 @@ namespace WordleQuest
 {
     public partial class LvlScreen : Form
     {
-        private string _levelNotification;
+        private string LevelNotification;
         private Random rand = new Random();
         private int CurrentOffset = 1;
         private string CurrentWord = string.Empty;
@@ -29,7 +29,7 @@ namespace WordleQuest
             BindTextChangedEvents();
 
             this.AcceptButton = submitWord;
-            _levelNotification = levelNotification;
+            LevelNotification = levelNotification;
         }
 
         private void backButton_Click(object sender, EventArgs e)
@@ -166,7 +166,7 @@ namespace WordleQuest
             CurrentOffset++;
             if (CurrentOffset > 6)
             {
-                MessageBox.Show("Не получилось... Попробуй ещё раз!" +
+                MessageBox.Show("Не получилось... Попробуй ещё раз!\n" +
                     "Правильное слово было: " + CurrentWord);
                 submitWord.Enabled = false;
             }
@@ -190,7 +190,7 @@ namespace WordleQuest
 
         private void EndGame()
         {
-            MessageBox.Show(_levelNotification, "КОНГРАТС");
+            MessageBox.Show(LevelNotification, "Поздравляю!");
             submitWord.Enabled = false;
         }
 
@@ -300,7 +300,10 @@ namespace WordleQuest
 
         private void infoBtn_Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.MessageBox.Show("Эта информация поможет тебе жить:\nСлова вводятся с клавиатуры, применяются кнопкой Enter.\nДля перехода на новую строку можно использовать мышку или Tab.", "Справка");
+            System.Windows.Forms.MessageBox.Show("Эта информация поможет тебе жить:\n" +
+                "Слова вводятся с клавиатуры, применяются кнопкой Enter.\n"+
+                "Для перехода на новую строку можно использовать мышку или Tab.\nБуквы Ё не существует... " +
+                "Используй Е.", "Справка");
         }
 
         private void testCheat_Click(object sender, EventArgs e)
