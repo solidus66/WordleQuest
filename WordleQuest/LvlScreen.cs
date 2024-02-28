@@ -14,13 +14,14 @@ namespace WordleQuest
 {
     public partial class LvlScreen : Form
     {
+        private string _levelNotification;
         private Random rand = new Random();
         private int CurrentOffset = 1;
         private string CurrentWord = string.Empty;
         private List<string> WordList = new List<string>();
         private List<TextBox> currentBoxes = new List<TextBox>();
 
-        public LvlScreen()
+        public LvlScreen(string levelNotification)
         {
             InitializeComponent();
             WordList = GetAllWords();
@@ -28,6 +29,7 @@ namespace WordleQuest
             BindTextChangedEvents();
 
             this.AcceptButton = submitWord;
+            _levelNotification = levelNotification;
         }
 
         private void backButton_Click(object sender, EventArgs e)
@@ -128,7 +130,7 @@ namespace WordleQuest
         private List<string> GetAllWords()
         {
             List<string> allWords = new List<string>();
-            using (StreamReader reader = new StreamReader("C:\\Users\\solidus66\\Desktop\\project\\WordleClone-main\\words_rus.txt"))
+            using (StreamReader reader = new StreamReader("words.txt"))
             {
                 while (!reader.EndOfStream)
                 {
@@ -188,7 +190,7 @@ namespace WordleQuest
 
         private void EndGame()
         {
-            MessageBox.Show("ХЕХЕХЕ С ПОБЕДОЙ!");
+            MessageBox.Show(_levelNotification, "КОНГРАТС");
             submitWord.Enabled = false;
         }
 
@@ -299,6 +301,11 @@ namespace WordleQuest
         private void infoBtn_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.MessageBox.Show("Эта информация поможет тебе жить:\nСлова вводятся с клавиатуры, применяются кнопкой Enter.\nДля перехода на новую строку можно использовать мышку или Tab.", "Справка");
+        }
+
+        private void testCheat_Click(object sender, EventArgs e)
+        {
+            testCheat.Text = CurrentWord;
         }
     }
 }

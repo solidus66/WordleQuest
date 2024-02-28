@@ -64,6 +64,7 @@
             r6s1 = new TextBox();
             submitWord = new Button();
             infoBtn = new Button();
+            testCheat = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -424,11 +425,22 @@
             infoBtn.UseVisualStyleBackColor = true;
             infoBtn.Click += infoBtn_Click;
             // 
+            // testCheat
+            // 
+            testCheat.Location = new Point(208, 72);
+            testCheat.Name = "testCheat";
+            testCheat.Size = new Size(64, 24);
+            testCheat.TabIndex = 34;
+            testCheat.Text = "Cheat";
+            testCheat.UseVisualStyleBackColor = true;
+            testCheat.Click += testCheat_Click;
+            // 
             // LvlScreen
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(482, 753);
+            Controls.Add(testCheat);
             Controls.Add(infoBtn);
             Controls.Add(submitWord);
             Controls.Add(r6s5);
@@ -512,5 +524,6 @@
         private TextBox r6s1;
         private Button submitWord;
         private Button infoBtn;
+        private Button testCheat;
     }
 }
