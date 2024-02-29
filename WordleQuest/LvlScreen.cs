@@ -14,14 +14,15 @@ namespace WordleQuest
 {
     public partial class LvlScreen : Form
     {
-        private string LevelNotification;
         private Random rand = new Random();
         private int CurrentOffset = 1;
         private string CurrentWord = string.Empty;
         private List<string> WordList = new List<string>();
         private List<TextBox> currentBoxes = new List<TextBox>();
+        private string LevelNotification;
+        private string Cat;
 
-        public LvlScreen(string levelNotification)
+        public LvlScreen(string levelNotification, string cat)
         {
             InitializeComponent();
             WordList = GetAllWords();
@@ -30,12 +31,13 @@ namespace WordleQuest
 
             this.AcceptButton = submitWord;
             LevelNotification = levelNotification;
+            Cat = cat;
         }
 
         private void backButton_Click(object sender, EventArgs e)
         {
             Hide();
-            Form1 startScreen = new Form1();
+            StartScreen startScreen = new StartScreen();
             startScreen.ShowDialog();
         }
 
@@ -130,7 +132,7 @@ namespace WordleQuest
         private List<string> GetAllWords()
         {
             List<string> allWords = new List<string>();
-            using (StreamReader reader = new StreamReader("words.txt"))
+            using (StreamReader reader = new StreamReader("resx/words.txt"))
             {
                 while (!reader.EndOfStream)
                 {
@@ -176,15 +178,19 @@ namespace WordleQuest
         {
             if (!CurrentWord.Contains(t.Text, StringComparison.OrdinalIgnoreCase))
             {
-                t.BackColor = Color.Gray;
+                //t.BackColor = Color.Gray;
+                t.BackColor = ColorTranslator.FromHtml("#9A97A1");
             }
             else if (CurrentWord[index].ToString().ToLower() != t.Text.ToLower())
             {
-                t.BackColor = ColorTranslator.FromHtml("#FFE70A");
+                //t.BackColor = ColorTranslator.FromHtml("#FFE70A"); // yellow
+                t.BackColor = ColorTranslator.FromHtml("#f9f3c1"); // yellow
+
             }
             else
             {
-                t.BackColor = ColorTranslator.FromHtml("#A4DA8B");
+                //t.BackColor = ColorTranslator.FromHtml("#A4DA8B"); // green
+                t.BackColor = ColorTranslator.FromHtml("#ccefcb"); // green
             }
         }
 
@@ -301,7 +307,7 @@ namespace WordleQuest
         private void infoBtn_Click(object sender, EventArgs e)
         {
             System.Windows.Forms.MessageBox.Show("Эта информация поможет тебе жить:\n" +
-                "Слова вводятся с клавиатуры, применяются кнопкой Enter.\n"+
+                "Слова вводятся с клавиатуры, применяются кнопкой Enter.\n" +
                 "Для перехода на новую строку можно использовать мышку или Tab.\nБуквы Ё не существует... " +
                 "Используй Е.", "Справка");
         }
@@ -309,6 +315,25 @@ namespace WordleQuest
         private void testCheat_Click(object sender, EventArgs e)
         {
             testCheat.Text = CurrentWord;
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+            label1.Text = "";
+            Bitmap bmp = new Bitmap(Cat);
+            pictureBox1.Image = bmp;
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            EasterEgg easterEgg = new EasterEgg("resx/img/4.gif");
+            easterEgg.ShowDialog();
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            EasterEgg easterEgg = new EasterEgg("resx/img/3.gif");
+            easterEgg.ShowDialog();
         }
     }
 }
