@@ -525,7 +525,6 @@
             testCheat.TabIndex = 34;
             testCheat.Text = "Cheat";
             testCheat.UseVisualStyleBackColor = true;
-            testCheat.Visible = false;
             testCheat.Click += testCheat_Click;
             // 
             // label2

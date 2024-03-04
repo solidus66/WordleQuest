@@ -174,23 +174,66 @@ namespace WordleQuest
             }
         }
 
+        //private void ColorBox(int index, TextBox t)
+        //{
+        //    if (!CurrentWord.Contains(t.Text, StringComparison.OrdinalIgnoreCase))
+        //    {
+        //        // буквы нет в слове
+        //        t.BackColor = ColorTranslator.FromHtml("#9A97A1"); // серый цвет
+        //    }
+        //    else
+        //    {
+        //        int countOccurrences = CurrentWord.Count(c => c.ToString().Equals(t.Text, StringComparison.OrdinalIgnoreCase));
+
+        //        if (CurrentWord[index].ToString().ToLower() == t.Text.ToLower())
+        //        {
+        //            // буква совпадает с текущей позицией
+        //            t.BackColor = ColorTranslator.FromHtml("#ccefcb"); // зеленый цвет
+        //        }
+        //        else if (countOccurrences > 1)
+        //        {
+        //            // буква присутствует в слове более одного раза, но не совпадает с текущей позицией
+        //            t.BackColor = ColorTranslator.FromHtml("#f9f3c1"); // желтый цвет
+        //        }
+        //        else
+        //        {
+        //            // буква присутствует в слове один раз и не совпадает с текущей позицией
+        //            t.BackColor = ColorTranslator.FromHtml("#f9f3c1"); // желтый цвет
+        //        }
+        //    }
+        //}
+
         private void ColorBox(int index, TextBox t)
         {
             if (!CurrentWord.Contains(t.Text, StringComparison.OrdinalIgnoreCase))
             {
-                //t.BackColor = Color.Gray;
-                t.BackColor = ColorTranslator.FromHtml("#9A97A1");
-            }
-            else if (CurrentWord[index].ToString().ToLower() != t.Text.ToLower())
-            {
-                //t.BackColor = ColorTranslator.FromHtml("#FFE70A"); // yellow
-                t.BackColor = ColorTranslator.FromHtml("#f9f3c1"); // yellow
-
+                // Буква не присутствует в слове
+                t.BackColor = ColorTranslator.FromHtml("#9A97A1"); // Серый цвет
             }
             else
             {
-                //t.BackColor = ColorTranslator.FromHtml("#A4DA8B"); // green
-                t.BackColor = ColorTranslator.FromHtml("#ccefcb"); // green
+                int countOccurrences = CurrentWord.Count(c => c.ToString().Equals(t.Text, StringComparison.OrdinalIgnoreCase));
+
+                if (CurrentWord[index].ToString().ToLower() == t.Text.ToLower())
+                {
+                    // буква совпадает с текущей позицией
+                    t.BackColor = ColorTranslator.FromHtml("#ccefcb"); // Зеленый цвет
+                }
+                else if (countOccurrences == 1)
+                {
+                    // буква присутствует в слове один раз и не совпадает с текущей позицией
+                    t.BackColor = ColorTranslator.FromHtml("#f9f3c1"); // Желтый цвет
+                }
+                else if (countOccurrences > 1 && CurrentWord.IndexOf(t.Text, StringComparison.OrdinalIgnoreCase) == index)
+                {
+                    // буква присутствует в слове более одного раза и совпадает с текущей позицией
+                    t.BackColor = ColorTranslator.FromHtml("#ccefcb"); // Зеленый цвет
+                }
+                else
+                {
+                    // буква присутствует в слове более одного раза и не совпадает с текущей позицией
+                    t.BackColor = ColorTranslator.FromHtml("#f9f3c1"); // зелёный цвет
+                }
             }
         }
 
@@ -292,12 +335,21 @@ namespace WordleQuest
 
             if (input.Length == 5 && rx.IsMatch(input))
             {
-                return true;
+                if (WordList.Contains(input, StringComparer.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+                else
+                {
+                    MessageBox.Show("Нет такого слова! (в этом списке)\nПопробуй другое!", "Еррорррррр");
+                    return false;
+                }
             }
 
-            MessageBox.Show("Пожалуйста, введи пятибуквенное слово.", "Еррор");
+            MessageBox.Show("Пожалуйста, введи пятибуквенное слово русскими буковами.....", "Еррооооооооооррр");
             return false;
         }
+
 
         private bool IsCorrectWord(string attempt)
         {
@@ -308,8 +360,7 @@ namespace WordleQuest
         {
             System.Windows.Forms.MessageBox.Show("Эта информация поможет тебе жить:\n" +
                 "Слова вводятся с клавиатуры, применяются кнопкой Enter.\n" +
-                "Для перехода на новую строку можно использовать мышку или Tab.\nБуквы Ё не существует... " +
-                "Используй Е.", "Справка");
+                "Для перехода на новую строку можно использовать мышку или Tab.", "Справка");
         }
 
         private void testCheat_Click(object sender, EventArgs e)
